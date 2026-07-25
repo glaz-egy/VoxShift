@@ -5426,6 +5426,7 @@ dependencies = [
  "num-traits",
  "once_cell",
  "pin-weak",
+ "raw-window-handle",
  "slint-macros",
  "unicode-segmentation",
  "vtable",
@@ -6486,6 +6487,7 @@ name = "voxshift-app"
 version = "0.1.0"
 dependencies = [
  "crossbeam-channel",
+ "raw-window-handle",
  "slint",
  "tokio",
  "tracing",

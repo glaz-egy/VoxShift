@@ -1,3 +1,11 @@
+// Without this, Windows builds a console-subsystem executable, which pops
+// up a command-prompt window alongside the tray app on every launch. This
+// doesn't affect logging: redirected stdout/stderr (e.g. `Start-Process
+// -RedirectStandardOutput`) are still delivered regardless of subsystem —
+// only automatic console-window allocation on a plain double-click is
+// suppressed.
+#![windows_subsystem = "windows"]
+
 mod application;
 mod tray;
 mod worker;

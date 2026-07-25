@@ -2,8 +2,10 @@
 //! minus the platform-specific pieces still deferred (Mica backdrop, real
 //! OS theme detection, autostart).
 
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
 
+use raw_window_handle::HasWindowHandle;
 use slint::ComponentHandle;
 use tokio::sync::watch;
 use tray_icon::TrayIconEvent;
@@ -69,11 +71,16 @@ pub fn run(background: bool) {
     let _tray_poll_timer = spawn_tray_event_poller(&ui, worker.command_tx.clone(), tray);
 
     if !background {
-        ui.show().ok();
-        ui.global::<AppState>().set_window_visible(true);
+        show_window(&ui.as_weak());
     }
 
-    ui.run().ok();
+    // Not `ui.run()`: its generated default quits the whole event loop once
+    // the last window closes, which — since `on_close_requested` above only
+    // hides the window rather than destroying it — would still tear down
+    // the tray-resident app the moment the user clicks the window's close
+    // button. `run_event_loop_until_quit` keeps running with zero visible
+    // windows; only the tray menu's "Quit" (`std::process::exit`) ends it.
+    slint::run_event_loop_until_quit().ok();
 }
 
 fn apply_initial_theme(ui: &MainWindow, config: &voxshift_storage::config::AppConfig) {
@@ -231,5 +238,33 @@ fn show_window(ui_weak: &slint::Weak<MainWindow>) {
     if let Some(ui) = ui_weak.upgrade() {
         ui.show().ok();
         ui.global::<AppState>().set_window_visible(true);
+        schedule_maximize_button_removal(ui_weak.clone());
     }
+}
+
+/// Removes the window's maximize button — a native Win32 title-bar tweak
+/// with no `.slint` markup equivalent, so it needs the raw HWND. Only
+/// applied once (it survives hide/show, since hiding doesn't destroy the
+/// native window).
+static MAXIMIZE_BUTTON_REMOVED: AtomicBool = AtomicBool::new(false);
+
+fn schedule_maximize_button_removal(ui_weak: slint::Weak<MainWindow>) {
+    if MAXIMIZE_BUTTON_REMOVED.load(Ordering::Relaxed) {
+        return;
+    }
+    // The native HWND doesn't exist yet the instant `show()` returns — per
+    // Slint's docs it's only created by the window manager during a
+    // subsequent event-loop iteration — so this is deferred rather than
+    // called inline right after `show()`.
+    slint::Timer::single_shot(Duration::from_millis(0), move || {
+        let Some(ui) = ui_weak.upgrade() else { return };
+        let slint_window_handle = ui.window().window_handle();
+        let Ok(handle) = slint_window_handle.window_handle() else {
+            return;
+        };
+        if let raw_window_handle::RawWindowHandle::Win32(win32) = handle.as_raw() {
+            voxshift_platform_windows::window_style::disable_maximize_button(win32.hwnd.get());
+            MAXIMIZE_BUTTON_REMOVED.store(true, Ordering::Relaxed);
+        }
+    });
 }
