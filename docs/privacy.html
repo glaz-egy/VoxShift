@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プライバシーポリシー - VoxShift</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
+    background: linear-gradient(180deg, #0b1220 0%, #05070c 100%);
+    color: #f2f5fa;
+    line-height: 1.7;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  a { color: #35d8c6; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  p.updated { color: #9fb0c8; font-size: 13px; margin-top: 0; margin-bottom: 40px; }
+  h2 { font-size: 18px; margin-top: 40px; border-left: 3px solid #5865f2; padding-left: 10px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 8px; }
+  .back { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #9fb0c8; text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="index.html">&larr; トップに戻る</a>
+  <h1>プライバシーポリシー</h1>
+  <p class="updated">最終更新日: 2026年7月</p>
+
+  <p>
+    VoxShift（以下「本アプリ」）は、VRChatのマイクミュート状態とDiscordのセルフミュート状態を連動させるための、
+    Windows上で動作するローカルアプリケーションです。本ポリシーでは、本アプリがどのような情報を扱うかを説明します。
+  </p>
+
+  <h2>開発者が収集する情報</h2>
+  <p>
+    開発者（glaz-egy）は、本アプリの利用状況・個人情報・利用統計などを一切収集しません。
+    本アプリはアクセス解析（アナリティクス）やクラッシュレポート送信、テレメトリの類を一切実装していません。
+    本アプリの動作に必要な外部サーバー（バックエンド）も存在しません。
+  </p>
+
+  <h2>Discordとの連携について</h2>
+  <p>
+    本アプリは、設定画面で利用者が明示的に「Discordで認証」を押した場合にのみ、Discordの公式デスクトップアプリが提供する
+    RPC（ローカルの名前付きパイプ通信）を通じて、以下のOAuth2スコープの許可を求めます。
+  </p>
+  <ul>
+    <li><code>identify</code> — Discordアカウントの識別に使用</li>
+    <li><code>rpc</code> — Discordデスクトップアプリのローカル操作用API</li>
+    <li><code>rpc.voice.read</code> — 現在の音声ミュート状態の取得</li>
+    <li><code>rpc.voice.write</code> — 音声ミュート状態の変更</li>
+  </ul>
+  <p>
+    認可によって発行されたアクセストークン・リフレッシュトークンは、Windowsの資格情報マネージャー
+    （Credential Manager、対象名 <code>VoxShift/DiscordOAuth</code>）にのみ保存されます。これらのトークンは
+    開発者を含む第三者のサーバーに送信されることはなく、お使いのPCからDiscord公式API（<code>discord.com</code>）へ
+    直接送受信されるのみです。
+  </p>
+  <p>
+    Discordとの連携は、Windowsの資格情報マネージャーから該当のエントリを削除するか、Discordの
+    「ユーザー設定 &gt; 認証済みアプリ」から本アプリの認証を取り消すことで、いつでも解除できます。
+  </p>
+
+  <h2>VRChatとの連携について</h2>
+  <p>
+    本アプリは、VRChatが提供するOSC（Open Sound Control）機能を用いて、お使いのPC内のループバックアドレス
+    （<code>127.0.0.1</code>）経由でのみVRChatと通信します。この通信はPCの外部に送信されることはありません。
+  </p>
+
+  <h2>ローカルに保存される情報</h2>
+  <p>
+    設定内容（<code>%LOCALAPPDATA%\VoxShift\config.json</code>）およびログ（アプリ内の診断画面からのみ閲覧可能）は、
+    お使いのPC内にのみ保存されます。これらの情報が外部に送信されることはありません。
+  </p>
+
+  <h2>本ポリシーの変更</h2>
+  <p>
+    本ポリシーの内容は、本アプリの機能追加・変更に伴い予告なく更新される場合があります。
+    最新の内容は本ページで随時ご確認ください。
+  </p>
+
+  <h2>お問い合わせ</h2>
+  <p>
+    本ポリシーに関するご質問は、
+    <a href="https://github.com/glaz-egy/VoxShift/issues">GitHubのIssue</a>
+    にてご連絡ください。
+  </p>
+</main>
+</body>
+</html>
