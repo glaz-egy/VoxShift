@@ -96,10 +96,16 @@ pub fn init(default_level: &str, file_logging_requested: bool) -> LogRingBuffer 
     let filter = tracing_subscriber::EnvFilter::try_from_default_env()
         .unwrap_or_else(|_| tracing_subscriber::EnvFilter::new(default_level));
 
-    let stdout_layer = tracing_subscriber::fmt::layer().with_writer(std::io::stdout);
+    // Default timer is UTC, which reads as several hours off from what the
+    // user sees on their own clock — use the local offset instead.
+    let timer = tracing_subscriber::fmt::time::LocalTime::rfc_3339();
+    let stdout_layer = tracing_subscriber::fmt::layer()
+        .with_writer(std::io::stdout)
+        .with_timer(timer.clone());
     let ring_layer = tracing_subscriber::fmt::layer()
         .with_writer(ring_writer)
-        .with_ansi(false);
+        .with_ansi(false)
+        .with_timer(timer);
 
     tracing_subscriber::registry()
         .with(filter)
