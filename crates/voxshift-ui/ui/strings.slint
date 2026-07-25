@@ -1,0 +1,56 @@
+// Every user-facing string in the app, in one place — mirrors the
+// `Tokens`/`AppState` global pattern. Values here are English design-time
+// defaults only; `voxshift_ui::i18n::apply()` overwrites them at startup
+// (and whenever the user changes the language setting) from a loaded
+// language pack (see `src/i18n.rs`).
+export global Strings {
+    // Sidebar navigation
+    in-out property <string> nav-dashboard: "Dashboard";
+    in-out property <string> nav-link-mode: "Link Mode";
+    in-out property <string> nav-settings: "Settings";
+    in-out property <string> nav-diagnostics: "Diagnostics";
+    in-out property <string> nav-about: "About";
+
+    // Dashboard
+    in-out property <string> card-vrchat-title: "VRChat";
+    in-out property <string> card-discord-title: "Discord";
+    in-out property <string> status-mic-on: "Mic ON";
+    in-out property <string> status-mic-off: "Mic OFF";
+    in-out property <string> status-unknown: "Unknown";
+    in-out property <string> status-vc-muted: "VC Muted";
+    in-out property <string> status-vc-on: "VC On";
+    in-out property <string> conn-connected: "Connected";
+    in-out property <string> conn-connecting: "Connecting";
+    in-out property <string> conn-authorizing: "Authorizing";
+    in-out property <string> conn-degraded: "Degraded";
+    in-out property <string> conn-disconnected: "Disconnected";
+    in-out property <string> mode-inverse: "Inverse / Bidirectional";
+    in-out property <string> mode-vrchat-priority: "VRChat Priority";
+    in-out property <string> action-pause: "Pause";
+    in-out property <string> action-resume: "Resume";
+    in-out property <string> action-resync: "Resync";
+    in-out property <string> label-last-sync-prefix: "Last sync: ";
+
+    // Link Mode screen
+    in-out property <string> link-mode-title: "Link Mode";
+    in-out property <string> link-mode-description: "Inverse/Bidirectional keeps VRChat and Discord in a strict inverse relationship. VRChat Priority only reflects VRChat's state onto Discord and never the reverse.";
+
+    // Settings screen
+    in-out property <string> settings-title: "Settings";
+    in-out property <string> settings-reduce-motion: "Reduce motion";
+    in-out property <string> settings-on: "On";
+    in-out property <string> settings-off: "Off";
+    in-out property <string> settings-language-title: "Language";
+    in-out property <string> settings-discord-title: "Discord";
+    in-out property <string> settings-discord-description: "Discord is only authorized when you click the button below — never automatically.";
+    in-out property <string> settings-discord-authorize-button: "Authorize with Discord";
+
+    // Diagnostics screen
+    in-out property <string> diagnostics-title: "Diagnostics";
+    in-out property <string> diagnostics-copy: "Copy";
+
+    // About screen
+    in-out property <string> about-title: "VoxShift";
+    in-out property <string> about-description: "Links VRChat and Discord mic/mute state so only one destination ever hears you at a time.";
+    in-out property <string> about-footer: "No VoxShift account. No telemetry. No cloud sync.";
+}

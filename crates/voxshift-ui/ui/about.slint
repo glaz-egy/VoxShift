@@ -1,0 +1,29 @@
+import { Tokens } from "components/tokens.slint";
+import { Strings } from "strings.slint";
+
+export component AboutScreen inherits Rectangle {
+    background: Tokens.color-bg-top;
+
+    VerticalLayout {
+        padding: Tokens.spacing-xl;
+        spacing: Tokens.spacing-sm;
+
+        Text {
+            text: Strings.about-title;
+            color: Tokens.color-text-primary;
+            font-size: Tokens.font-card-title;
+            font-weight: 700;
+        }
+        Text {
+            text: Strings.about-description;
+            color: Tokens.color-text-secondary;
+            font-size: Tokens.font-body;
+            wrap: word-wrap;
+        }
+        Text {
+            text: Strings.about-footer;
+            color: Tokens.color-text-secondary;
+            font-size: Tokens.font-caption;
+        }
+    }
+}

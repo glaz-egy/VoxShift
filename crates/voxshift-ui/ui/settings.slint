@@ -1,0 +1,86 @@
+import { Tokens } from "components/tokens.slint";
+import { Strings } from "strings.slint";
+import { AppState } from "app-state.slint";
+import { GhostButton, SegmentButton } from "components/button.slint";
+
+// Minimal for this pass: reduced-motion + language + Discord authorization
+// are wired; theme/VRChat-port/startup fields are a follow-up (need
+// additional AppState callbacks not yet wired to voxshift-storage::config).
+export component SettingsScreen inherits Rectangle {
+    background: Tokens.color-bg-top;
+
+    VerticalLayout {
+        padding: Tokens.spacing-xl;
+        spacing: Tokens.spacing-lg;
+
+        Text {
+            text: Strings.settings-title;
+            color: Tokens.color-text-primary;
+            font-size: Tokens.font-card-title;
+            font-weight: 700;
+        }
+
+        HorizontalLayout {
+            spacing: Tokens.spacing-md;
+            Text {
+                text: Strings.settings-reduce-motion;
+                color: Tokens.color-text-primary;
+                font-size: Tokens.font-body;
+                vertical-alignment: center;
+            }
+            GhostButton {
+                text-label: AppState.reduced-motion ? Strings.settings-on : Strings.settings-off;
+                active: AppState.reduced-motion;
+                clicked => { AppState.reduced-motion = !AppState.reduced-motion; }
+            }
+        }
+
+        Rectangle { height: 1px; background: Tokens.color-border-hairline; }
+
+        Text {
+            text: Strings.settings-language-title;
+            color: Tokens.color-text-primary;
+            font-size: Tokens.font-body;
+            font-weight: 700;
+        }
+
+        HorizontalLayout {
+            spacing: Tokens.spacing-md;
+            for name[i] in AppState.available-language-names : SegmentButton {
+                text-label: name;
+                selected: AppState.current-language-code == AppState.available-language-codes[i];
+                clicked => { AppState.set-language(AppState.available-language-codes[i]); }
+            }
+        }
+
+        Rectangle { height: 1px; background: Tokens.color-border-hairline; }
+
+        Text {
+            text: Strings.settings-discord-title;
+            color: Tokens.color-text-primary;
+            font-size: Tokens.font-body;
+            font-weight: 700;
+        }
+
+        Text {
+            text: Strings.settings-discord-description;
+            color: Tokens.color-text-secondary;
+            font-size: Tokens.font-caption;
+            wrap: word-wrap;
+        }
+
+        HorizontalLayout {
+            spacing: Tokens.spacing-md;
+            GhostButton {
+                text-label: Strings.settings-discord-authorize-button;
+                clicked => { AppState.reauthorize-discord(); }
+            }
+            Text {
+                text: AppState.discord-auth-message;
+                color: Tokens.color-state-normal;
+                font-size: Tokens.font-caption;
+                vertical-alignment: center;
+            }
+        }
+    }
+}

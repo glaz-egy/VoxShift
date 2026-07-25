@@ -1,0 +1,39 @@
+import { ListView } from "std-widgets.slint";
+import { Tokens } from "components/tokens.slint";
+import { Strings } from "strings.slint";
+import { AppState } from "app-state.slint";
+import { GhostButton } from "components/button.slint";
+
+export component DiagnosticsScreen inherits Rectangle {
+    background: Tokens.color-bg-top;
+
+    VerticalLayout {
+        padding: Tokens.spacing-xl;
+        spacing: Tokens.spacing-md;
+
+        HorizontalLayout {
+            spacing: Tokens.spacing-md;
+            Text {
+                text: Strings.diagnostics-title;
+                color: Tokens.color-text-primary;
+                font-size: Tokens.font-card-title;
+                font-weight: 700;
+                vertical-alignment: center;
+            }
+            Rectangle { horizontal-stretch: 1; }
+            GhostButton {
+                text-label: Strings.diagnostics-copy;
+                clicked => { AppState.copy-diagnostics(); }
+            }
+        }
+
+        ListView {
+            for line[i] in AppState.log-lines : Text {
+                text: line;
+                color: Tokens.color-text-secondary;
+                font-size: Tokens.font-caption;
+                wrap: word-wrap;
+            }
+        }
+    }
+}

@@ -1,0 +1,45 @@
+{
+  "nav-dashboard": "ダッシュボード",
+  "nav-link-mode": "リンクモード",
+  "nav-settings": "設定",
+  "nav-diagnostics": "診断情報",
+  "nav-about": "アプリについて",
+
+  "card-vrchat-title": "VRChat",
+  "card-discord-title": "Discord",
+  "status-mic-on": "マイクオン",
+  "status-mic-off": "マイクオフ",
+  "status-unknown": "不明",
+  "status-vc-muted": "VCミュート中",
+  "status-vc-on": "VCオン",
+  "conn-connected": "接続済み",
+  "conn-connecting": "接続中",
+  "conn-authorizing": "認可中",
+  "conn-degraded": "低下",
+  "conn-disconnected": "未接続",
+  "mode-inverse": "反転連動",
+  "mode-vrchat-priority": "VRChat優先",
+  "action-pause": "一時停止",
+  "action-resume": "再開",
+  "action-resync": "再同期",
+  "label-last-sync-prefix": "最終同期: ",
+
+  "link-mode-title": "リンクモード",
+  "link-mode-description": "反転連動は、VRChatとDiscordを厳密な反転関係で連動させます。VRChat優先は、VRChatの状態のみをDiscordへ反映し、逆方向には反映しません。",
+
+  "settings-title": "設定",
+  "settings-reduce-motion": "アニメーションを減らす",
+  "settings-on": "オン",
+  "settings-off": "オフ",
+  "settings-language-title": "言語",
+  "settings-discord-title": "Discord",
+  "settings-discord-description": "Discordの認可は、下のボタンを押したときだけ行われます。自動では行われません。",
+  "settings-discord-authorize-button": "Discordで認可する",
+
+  "diagnostics-title": "診断情報",
+  "diagnostics-copy": "コピー",
+
+  "about-title": "VoxShift",
+  "about-description": "VRChatとDiscordのマイク・ミュート状態を連動させ、常にどちらか一方にしか音声が届かないようにします。",
+  "about-footer": "VoxShift独自アカウント・テレメトリー・クラウド同期はありません。"
+}

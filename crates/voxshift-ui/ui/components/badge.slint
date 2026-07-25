@@ -1,0 +1,46 @@
+import { Tokens } from "tokens.slint";
+
+export enum BadgeState { Normal, Paused, Error, Disabled }
+
+export component StatusBadge inherits Rectangle {
+    in property <BadgeState> state: BadgeState.Disabled;
+    in property <string> text-label: "";
+    in property <string> icon: "";
+
+    function fg-color() -> color {
+        if (state == BadgeState.Normal) { return Tokens.color-state-normal; }
+        if (state == BadgeState.Paused) { return Tokens.color-state-paused; }
+        if (state == BadgeState.Error) { return Tokens.color-state-error; }
+        return Tokens.color-state-disabled;
+    }
+    function bg-color() -> color {
+        if (state == BadgeState.Normal) { return Tokens.color-state-normal-tint; }
+        if (state == BadgeState.Paused) { return Tokens.color-state-paused-tint; }
+        if (state == BadgeState.Error) { return Tokens.color-state-error-tint; }
+        return Tokens.color-state-disabled-tint;
+    }
+
+    border-radius: Tokens.radius-pill;
+    background: bg-color();
+    height: 22px;
+
+    HorizontalLayout {
+        padding-left: Tokens.spacing-sm;
+        padding-right: Tokens.spacing-sm;
+        spacing: Tokens.spacing-xxs;
+        alignment: center;
+        Text {
+            text: icon;
+            color: fg-color();
+            font-size: Tokens.font-badge-label;
+            vertical-alignment: center;
+        }
+        Text {
+            text: text-label;
+            color: fg-color();
+            font-size: Tokens.font-badge-label;
+            font-weight: 600;
+            vertical-alignment: center;
+        }
+    }
+}

@@ -1,0 +1,47 @@
+// Mirrors voxshift_core::state::AppSnapshot (§10) field-for-field, plus UI-
+// only concerns (current screen, reduced-motion, window visibility).
+
+export enum Screen { Dashboard, LinkMode, Settings, Diagnostics, About }
+export enum ConnectionState { Disconnected, Connecting, Authorizing, Connected, Degraded }
+export enum MuteState { Unknown, Muted, Unmuted }
+export enum AppLinkMode { InverseBidirectional, VrchatMaster }
+export enum LinkState { Active, Paused, WaitingForState, Faulted }
+
+export global AppState {
+    in-out property <ConnectionState> vrchat-connection: ConnectionState.Disconnected;
+    in-out property <MuteState> vrchat-mute: MuteState.Unknown;
+    in-out property <ConnectionState> discord-connection: ConnectionState.Disconnected;
+    in-out property <MuteState> discord-mute: MuteState.Unknown;
+    in-out property <bool> discord-in-voice-channel: false;
+    in-out property <AppLinkMode> link-mode: AppLinkMode.InverseBidirectional;
+    in-out property <LinkState> link-state: LinkState.WaitingForState;
+    in-out property <string> last-sync-label: "--:--:--";
+    in-out property <string> last-error: "";
+
+    in-out property <bool> reduced-motion: false;
+    in-out property <bool> window-visible: true;
+    in-out property <Screen> current-screen: Screen.Dashboard;
+
+    // Diagnostics screen data (pushed on demand, not on every snapshot).
+    in-out property <[string]> log-lines: [];
+
+    // Discord authorization is user-triggered (a Settings button), never
+    // automatic on first launch — §6.2.1.
+    in-out property <string> discord-auth-message: "";
+
+    // i18n: the active language code (e.g. "en", "ja") and the list of
+    // available ones, pushed at startup from voxshift_ui::i18n so the
+    // Settings screen can build its language picker without hardcoding
+    // which packs exist.
+    in-out property <string> current-language-code: "en";
+    in-out property <[string]> available-language-codes: ["en"];
+    in-out property <[string]> available-language-names: ["English"];
+
+    callback pause-clicked();
+    callback resume-clicked();
+    callback set-link-mode(AppLinkMode);
+    callback manual-resync();
+    callback reauthorize-discord();
+    callback copy-diagnostics();
+    callback set-language(string);
+}

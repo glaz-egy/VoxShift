@@ -1,0 +1,44 @@
+import { Tokens } from "components/tokens.slint";
+import { Strings } from "strings.slint";
+import { AppState, AppLinkMode } from "app-state.slint";
+import { SegmentButton } from "components/button.slint";
+
+// Minimal for this pass: mirrors the dashboard's mode toggle. Startup
+// authority / resume policy controls are a follow-up (need additional
+// AppState callbacks not yet wired to voxshift-storage::config).
+export component LinkModeScreen inherits Rectangle {
+    background: Tokens.color-bg-top;
+
+    VerticalLayout {
+        padding: Tokens.spacing-xl;
+        spacing: Tokens.spacing-lg;
+
+        Text {
+            text: Strings.link-mode-title;
+            color: Tokens.color-text-primary;
+            font-size: Tokens.font-card-title;
+            font-weight: 700;
+        }
+
+        Text {
+            text: Strings.link-mode-description;
+            color: Tokens.color-text-secondary;
+            font-size: Tokens.font-body;
+            wrap: word-wrap;
+        }
+
+        HorizontalLayout {
+            spacing: Tokens.spacing-md;
+            SegmentButton {
+                text-label: Strings.mode-inverse;
+                selected: AppState.link-mode == AppLinkMode.InverseBidirectional;
+                clicked => { AppState.set-link-mode(AppLinkMode.InverseBidirectional); }
+            }
+            SegmentButton {
+                text-label: Strings.mode-vrchat-priority;
+                selected: AppState.link-mode == AppLinkMode.VrchatMaster;
+                clicked => { AppState.set-link-mode(AppLinkMode.VrchatMaster); }
+            }
+        }
+    }
+}

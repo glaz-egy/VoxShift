@@ -1,0 +1,69 @@
+// Mirrors .claude/DESIGN.md exactly. Every value here is pushed at runtime
+// by voxshift-ui's Rust `theme` module (design_tokens.rs is the source of
+// truth) — nothing in this file should be read as "the real value", only as
+// a design-time preview default. No other .slint file may declare a literal
+// color/px/radius outside this one.
+export global Tokens {
+    // Service accents
+    in-out property <color> color-vrchat: #35D8C6;
+    in-out property <color> color-discord: #5865F2;
+
+    // State accents
+    in-out property <color> color-state-normal: #34C972;
+    in-out property <color> color-state-paused: #F5A623;
+    in-out property <color> color-state-error: #EF5350;
+    in-out property <color> color-state-disabled: #6B7686;
+    in-out property <color> color-state-normal-tint: #1F2E22;
+    in-out property <color> color-state-paused-tint: #2E2717;
+    in-out property <color> color-state-error-tint: #2E1F1F;
+    in-out property <color> color-state-disabled-tint: #20242C;
+
+    // Background / surfaces
+    in-out property <color> color-bg-top: #0B1220;
+    in-out property <color> color-bg-bottom: #05070C;
+    in-out property <color> color-surface-card: #121A2C;
+    in-out property <color> color-surface-card-hover: #17203A;
+    in-out property <color> color-surface-elevated: #1B2542;
+    in-out property <color> color-border-hairline: #ffffff22;
+
+    // Text
+    in-out property <color> color-text-primary: #F2F5FA;
+    in-out property <color> color-text-secondary: #9FB0C8;
+    in-out property <color> color-text-disabled: #6B7686;
+    in-out property <color> color-text-on-accent-light: #06110E;
+    in-out property <color> color-text-on-accent-dark: #FFFFFF;
+
+    // Neutral chrome
+    in-out property <color> color-focus-ring: #ffffffb3;
+    in-out property <color> color-nav-active-indicator: #f2f5fab3;
+
+    // Typography (already text-scale-multiplied by Rust)
+    in-out property <length> font-nav-label: 13px;
+    in-out property <length> font-card-title: 15px;
+    in-out property <length> font-status-primary: 18px;
+    in-out property <length> font-status-secondary: 12px;
+    in-out property <length> font-body: 13px;
+    in-out property <length> font-caption: 11px;
+    in-out property <length> font-button-label: 13px;
+    in-out property <length> font-badge-label: 11px;
+    in-out property <length> font-link-glyph: 20px;
+
+    // Spacing
+    in-out property <length> spacing-xxs: 2px;
+    in-out property <length> spacing-xs: 4px;
+    in-out property <length> spacing-sm: 8px;
+    in-out property <length> spacing-md: 12px;
+    in-out property <length> spacing-lg: 16px;
+    in-out property <length> spacing-xl: 24px;
+    in-out property <length> spacing-xxl: 32px;
+
+    // Radius
+    in-out property <length> radius-xs: 6px;
+    in-out property <length> radius-sm: 8px;
+    in-out property <length> radius-lg: 14px;
+    in-out property <length> radius-pill: 999px;
+
+    // Motion (already reduced-motion-resolved by Rust: 0ms when disabled)
+    in-out property <duration> motion-fade: 200ms;
+    in-out property <duration> motion-pulse: 260ms;
+}

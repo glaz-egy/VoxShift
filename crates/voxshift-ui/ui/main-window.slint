@@ -1,0 +1,69 @@
+import { Tokens } from "components/tokens.slint";
+import { Strings } from "strings.slint";
+import { AppState, Screen } from "app-state.slint";
+import { NavRow } from "components/nav-row.slint";
+import { Dashboard } from "dashboard.slint";
+import { LinkModeScreen } from "link-mode.slint";
+import { SettingsScreen } from "settings.slint";
+import { DiagnosticsScreen } from "diagnostics.slint";
+import { AboutScreen } from "about.slint";
+
+export { AppState, Screen, Tokens, Strings }
+
+export component MainWindow inherits Window {
+    title: "VoxShift";
+    preferred-width: 820px;
+    preferred-height: 560px;
+    min-width: 720px;
+    min-height: 500px;
+    background: Tokens.color-bg-top;
+
+    HorizontalLayout {
+        Rectangle {
+            width: 160px;
+            background: Tokens.color-bg-bottom;
+
+            VerticalLayout {
+                padding: Tokens.spacing-md;
+                spacing: Tokens.spacing-xxs;
+
+                NavRow {
+                    text-label: Strings.nav-dashboard;
+                    active: AppState.current-screen == Screen.Dashboard;
+                    clicked => { AppState.current-screen = Screen.Dashboard; }
+                }
+                NavRow {
+                    text-label: Strings.nav-link-mode;
+                    active: AppState.current-screen == Screen.LinkMode;
+                    clicked => { AppState.current-screen = Screen.LinkMode; }
+                }
+                NavRow {
+                    text-label: Strings.nav-settings;
+                    active: AppState.current-screen == Screen.Settings;
+                    clicked => { AppState.current-screen = Screen.Settings; }
+                }
+                NavRow {
+                    text-label: Strings.nav-diagnostics;
+                    active: AppState.current-screen == Screen.Diagnostics;
+                    clicked => { AppState.current-screen = Screen.Diagnostics; }
+                }
+                NavRow {
+                    text-label: Strings.nav-about;
+                    active: AppState.current-screen == Screen.About;
+                    clicked => { AppState.current-screen = Screen.About; }
+                }
+            }
+        }
+
+        Rectangle {
+            // Conditional instantiation (not `visible: false`) so an
+            // inactive screen's timers/animations don't exist at all while
+            // hidden (§17 zero-cost-while-hidden).
+            if AppState.current-screen == Screen.Dashboard : Dashboard {}
+            if AppState.current-screen == Screen.LinkMode : LinkModeScreen {}
+            if AppState.current-screen == Screen.Settings : SettingsScreen {}
+            if AppState.current-screen == Screen.Diagnostics : DiagnosticsScreen {}
+            if AppState.current-screen == Screen.About : AboutScreen {}
+        }
+    }
+}

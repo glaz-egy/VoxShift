@@ -1,0 +1,16 @@
+[package]
+name = "coordinator-tests"
+version = "0.1.0"
+edition.workspace = true
+publish = false
+
+[dependencies]
+
+[dev-dependencies]
+tokio.workspace = true
+uuid.workspace = true
+voxshift-core = { path = "../../crates/voxshift-core" }
+voxshift-discord = { path = "../../crates/voxshift-discord" }
+voxshift-vrchat = { path = "../../crates/voxshift-vrchat" }
+discord-mock = { path = "../discord-mock" }
+osc-mock = { path = "../osc-mock" }

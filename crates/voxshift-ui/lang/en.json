@@ -1,0 +1,45 @@
+{
+  "nav-dashboard": "Dashboard",
+  "nav-link-mode": "Link Mode",
+  "nav-settings": "Settings",
+  "nav-diagnostics": "Diagnostics",
+  "nav-about": "About",
+
+  "card-vrchat-title": "VRChat",
+  "card-discord-title": "Discord",
+  "status-mic-on": "Mic ON",
+  "status-mic-off": "Mic OFF",
+  "status-unknown": "Unknown",
+  "status-vc-muted": "VC Muted",
+  "status-vc-on": "VC On",
+  "conn-connected": "Connected",
+  "conn-connecting": "Connecting",
+  "conn-authorizing": "Authorizing",
+  "conn-degraded": "Degraded",
+  "conn-disconnected": "Disconnected",
+  "mode-inverse": "Inverse / Bidirectional",
+  "mode-vrchat-priority": "VRChat Priority",
+  "action-pause": "Pause",
+  "action-resume": "Resume",
+  "action-resync": "Resync",
+  "label-last-sync-prefix": "Last sync: ",
+
+  "link-mode-title": "Link Mode",
+  "link-mode-description": "Inverse/Bidirectional keeps VRChat and Discord in a strict inverse relationship. VRChat Priority only reflects VRChat's state onto Discord and never the reverse.",
+
+  "settings-title": "Settings",
+  "settings-reduce-motion": "Reduce motion",
+  "settings-on": "On",
+  "settings-off": "Off",
+  "settings-language-title": "Language",
+  "settings-discord-title": "Discord",
+  "settings-discord-description": "Discord is only authorized when you click the button below — never automatically.",
+  "settings-discord-authorize-button": "Authorize with Discord",
+
+  "diagnostics-title": "Diagnostics",
+  "diagnostics-copy": "Copy",
+
+  "about-title": "VoxShift",
+  "about-description": "Links VRChat and Discord mic/mute state so only one destination ever hears you at a time.",
+  "about-footer": "No VoxShift account. No telemetry. No cloud sync."
+}

@@ -1,0 +1,10 @@
+[package]
+name = "discord-mock"
+version = "0.1.0"
+edition.workspace = true
+publish = false
+
+[dependencies]
+tokio.workspace = true
+serde_json.workspace = true
+voxshift-discord = { path = "../../crates/voxshift-discord" }

@@ -1,0 +1,7 @@
+# VoxShift's Discord application Client ID (a public client — not secret,
+# safe to keep in source/build config) is embedded at build time rather
+# than being a runtime-configurable setting: every VoxShift build talks to
+# the same Discord application, so this isn't something individual users
+# should need to edit.
+[env]
+VOXSHIFT_DISCORD_CLIENT_ID = "1530249083648999615"

@@ -1,0 +1,32 @@
+import { Tokens } from "tokens.slint";
+
+export component NavRow inherits Rectangle {
+    in property <string> text-label: "";
+    in property <bool> active: false;
+    callback clicked <=> touch.clicked;
+
+    background: active ? Tokens.color-surface-card-hover : transparent;
+    border-radius: Tokens.radius-sm;
+    height: 36px;
+
+    touch := TouchArea {}
+
+    Rectangle {
+        x: 0;
+        width: 3px;
+        visible: active;
+        background: Tokens.color-nav-active-indicator;
+    }
+
+    HorizontalLayout {
+        padding-left: Tokens.spacing-md;
+        alignment: start;
+        Text {
+            text: text-label;
+            color: active ? Tokens.color-text-primary : Tokens.color-text-secondary;
+            font-size: Tokens.font-nav-label;
+            font-weight: active ? 600 : 500;
+            vertical-alignment: center;
+        }
+    }
+}

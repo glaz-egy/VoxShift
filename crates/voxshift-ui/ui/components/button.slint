@@ -1,0 +1,53 @@
+import { Tokens } from "tokens.slint";
+
+export component GhostButton inherits Rectangle {
+    in property <string> text-label: "";
+    in property <bool> active: false;
+    callback clicked <=> touch.clicked;
+
+    border-radius: Tokens.radius-pill;
+    border-width: 1px;
+    border-color: active ? Tokens.color-state-paused : Tokens.color-border-hairline;
+    background: active ? Tokens.color-state-paused-tint : transparent;
+    height: 32px;
+
+    touch := TouchArea {}
+
+    HorizontalLayout {
+        padding-left: Tokens.spacing-lg;
+        padding-right: Tokens.spacing-lg;
+        alignment: center;
+        Text {
+            text: text-label;
+            color: active ? Tokens.color-state-paused : Tokens.color-text-primary;
+            font-size: Tokens.font-button-label;
+            font-weight: 600;
+            vertical-alignment: center;
+        }
+    }
+}
+
+export component SegmentButton inherits Rectangle {
+    in property <string> text-label: "";
+    in property <bool> selected: false;
+    callback clicked <=> touch.clicked;
+
+    border-radius: Tokens.radius-pill;
+    background: selected ? Tokens.color-vrchat : Tokens.color-surface-card-hover;
+    height: 32px;
+
+    touch := TouchArea {}
+
+    HorizontalLayout {
+        padding-left: Tokens.spacing-lg;
+        padding-right: Tokens.spacing-lg;
+        alignment: center;
+        Text {
+            text: text-label;
+            color: selected ? Tokens.color-text-on-accent-light : Tokens.color-text-primary;
+            font-size: Tokens.font-button-label;
+            font-weight: 600;
+            vertical-alignment: center;
+        }
+    }
+}

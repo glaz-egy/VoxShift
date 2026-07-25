@@ -1,0 +1,132 @@
+import { Tokens } from "components/tokens.slint";
+import { Strings } from "strings.slint";
+import { AppState, ConnectionState, MuteState, AppLinkMode, LinkState } from "app-state.slint";
+import { Card } from "components/card.slint";
+import { StatusBadge, BadgeState } from "components/badge.slint";
+import { GhostButton, SegmentButton } from "components/button.slint";
+import { LinkConnector } from "components/link-connector.slint";
+
+export component Dashboard inherits Rectangle {
+    function vrchat-status-text() -> string {
+        if (AppState.vrchat-mute == MuteState.Muted) { return Strings.status-mic-off; }
+        if (AppState.vrchat-mute == MuteState.Unmuted) { return Strings.status-mic-on; }
+        return Strings.status-unknown;
+    }
+    function discord-status-text() -> string {
+        if (AppState.discord-mute == MuteState.Muted) { return Strings.status-vc-muted; }
+        if (AppState.discord-mute == MuteState.Unmuted) { return Strings.status-vc-on; }
+        return Strings.status-unknown;
+    }
+    function connection-text(state: ConnectionState) -> string {
+        if (state == ConnectionState.Connected) { return Strings.conn-connected; }
+        if (state == ConnectionState.Connecting) { return Strings.conn-connecting; }
+        if (state == ConnectionState.Authorizing) { return Strings.conn-authorizing; }
+        if (state == ConnectionState.Degraded) { return Strings.conn-degraded; }
+        return Strings.conn-disconnected;
+    }
+    function connection-badge(state: ConnectionState) -> BadgeState {
+        if (state == ConnectionState.Connected) { return BadgeState.Normal; }
+        if (state == ConnectionState.Degraded) { return BadgeState.Error; }
+        if (state == ConnectionState.Authorizing || state == ConnectionState.Connecting) { return BadgeState.Paused; }
+        return BadgeState.Disabled;
+    }
+    function link-glyph() -> string {
+        if (AppState.link-state == LinkState.Paused) { return "\u{2573}"; }
+        if (AppState.link-mode == AppLinkMode.VrchatMaster) { return "\u{2192}"; }
+        return "\u{21c4}";
+    }
+    function link-glyph-color() -> color {
+        if (AppState.link-state == LinkState.Paused) { return Tokens.color-state-paused; }
+        if (AppState.link-mode == AppLinkMode.VrchatMaster) { return Tokens.color-vrchat; }
+        return Tokens.color-text-primary;
+    }
+
+    background: Tokens.color-bg-top;
+
+    VerticalLayout {
+        padding: Tokens.spacing-xl;
+        spacing: Tokens.spacing-xl;
+
+        HorizontalLayout {
+            spacing: Tokens.spacing-xl;
+
+            Card {
+                width: 260px;
+                VerticalLayout {
+                    padding: Tokens.spacing-lg;
+                    spacing: Tokens.spacing-sm;
+                    Text { text: Strings.card-vrchat-title; color: Tokens.color-vrchat; font-size: Tokens.font-card-title; font-weight: 700; }
+                    Text { text: vrchat-status-text(); color: Tokens.color-text-primary; font-size: Tokens.font-status-primary; font-weight: 600; }
+                    StatusBadge {
+                        state: connection-badge(AppState.vrchat-connection);
+                        icon: "\u{25cf}";
+                        text-label: connection-text(AppState.vrchat-connection);
+                    }
+                }
+            }
+
+            Rectangle {
+                width: 80px;
+                LinkConnector { glyph: link-glyph(); glyph-color: link-glyph-color(); }
+            }
+
+            Card {
+                width: 260px;
+                VerticalLayout {
+                    padding: Tokens.spacing-lg;
+                    spacing: Tokens.spacing-sm;
+                    Text { text: Strings.card-discord-title; color: Tokens.color-discord; font-size: Tokens.font-card-title; font-weight: 700; }
+                    Text { text: discord-status-text(); color: Tokens.color-text-primary; font-size: Tokens.font-status-primary; font-weight: 600; }
+                    StatusBadge {
+                        state: connection-badge(AppState.discord-connection);
+                        icon: "\u{25cf}";
+                        text-label: connection-text(AppState.discord-connection);
+                    }
+                }
+            }
+        }
+
+        HorizontalLayout {
+            spacing: Tokens.spacing-md;
+            alignment: center;
+            SegmentButton {
+                text-label: Strings.mode-inverse;
+                selected: AppState.link-mode == AppLinkMode.InverseBidirectional;
+                clicked => { AppState.set-link-mode(AppLinkMode.InverseBidirectional); }
+            }
+            SegmentButton {
+                text-label: Strings.mode-vrchat-priority;
+                selected: AppState.link-mode == AppLinkMode.VrchatMaster;
+                clicked => { AppState.set-link-mode(AppLinkMode.VrchatMaster); }
+            }
+            GhostButton {
+                text-label: AppState.link-state == LinkState.Paused ? Strings.action-resume : Strings.action-pause;
+                active: AppState.link-state == LinkState.Paused;
+                clicked => {
+                    if (AppState.link-state == LinkState.Paused) {
+                        AppState.resume-clicked();
+                    } else {
+                        AppState.pause-clicked();
+                    }
+                }
+            }
+            GhostButton {
+                text-label: Strings.action-resync;
+                clicked => { AppState.manual-resync(); }
+            }
+        }
+
+        Text {
+            text: Strings.label-last-sync-prefix + AppState.last-sync-label;
+            color: Tokens.color-text-secondary;
+            font-size: Tokens.font-caption;
+        }
+
+        if AppState.last-error != "" : Text {
+            text: AppState.last-error;
+            color: Tokens.color-state-error;
+            font-size: Tokens.font-body;
+            wrap: word-wrap;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+import { Tokens } from "tokens.slint";
+import { AppState } from "../app-state.slint";
+
+export component LinkConnector inherits Rectangle {
+    in property <string> glyph: "\u{21c4}";
+    in property <color> glyph-color: Tokens.color-text-primary;
+
+    // `in` properties can't be animated directly — animate an internal
+    // mirror instead.
+    property <color> effective-color: glyph-color;
+    animate effective-color { duration: AppState.reduced-motion ? 0ms : Tokens.motion-pulse; }
+
+    Text {
+        text: glyph;
+        color: effective-color;
+        font-size: Tokens.font-link-glyph;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+}

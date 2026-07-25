@@ -1,0 +1,9 @@
+[package]
+name = "osc-mock"
+version = "0.1.0"
+edition.workspace = true
+publish = false
+
+[dependencies]
+tokio.workspace = true
+rosc.workspace = true

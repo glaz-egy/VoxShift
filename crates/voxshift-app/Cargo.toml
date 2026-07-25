@@ -1,0 +1,23 @@
+[package]
+name = "voxshift-app"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "voxshift"
+path = "src/main.rs"
+
+[dependencies]
+voxshift-core = { path = "../voxshift-core" }
+voxshift-storage = { path = "../voxshift-storage" }
+voxshift-vrchat = { path = "../voxshift-vrchat" }
+voxshift-discord = { path = "../voxshift-discord" }
+voxshift-platform-windows = { path = "../voxshift-platform-windows" }
+voxshift-ui = { path = "../voxshift-ui" }
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+slint = "1"
+tray-icon = "0.19"
+crossbeam-channel = "0.5"
